@@ -15,7 +15,7 @@ def manage():
     args = {
                 "ip" : ip,
                 "ua" : ua,
-                "time" : datetime.datetime.now(),
+                "time" : datetime.datetime.utcnow(),
                 "status" : 1,
                 "username":username
             }
