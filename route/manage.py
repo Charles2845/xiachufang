@@ -33,7 +33,7 @@ def manage():
 def dashboard():
     ip = request.remote_addr
     ua = request.headers.get('User-Agent')
-    username = session['username']
+    username = session.get('username')
     check = db.session.query(LoginTrack).filter(LoginTrack.user_name == username, LoginTrack.ip == ip,
                                                 LoginTrack.user_agent == ua,LoginTrack.status == 1).all()
     data = db.session.query(LoginTrack).filter(LoginTrack.user_name == username, LoginTrack.ip == ip,
