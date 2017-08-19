@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% import "bootstrap/wtf.html" as wtf %}
+
+{% block title %}后台管理系统{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+    <h1>欢迎登陆后台管理系统</h1>
+</div>
+    <h2>在线用户</h2>
+  <ul id="navigation">
+    {% for item in online %}
+        <li>IP:{{ item.ip }}<br />Time:{{ item.time }}<br />User-Agent:{{ item.user_agent }}<br />
+            <a href={{ url_for("manage.offline",id=item.id) }}>注销该用户</a><br /></li>
+    {% endfor %}
+    </ul>
+    <h2>登陆历史记录</h2>
+  <ul id="navigation">
+    {% for item in history %}
+        <li>IP:{{ item.ip }}<br />Time:{{ item.time }}<br />User-Agent:{{ item.user_agent }}<br /></li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}
