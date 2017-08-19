@@ -39,10 +39,10 @@ def dashboard():
     check = db.session.query(LoginTrack).filter(LoginTrack.user_name == username, LoginTrack.ip == ip,
                                                 LoginTrack.user_agent == ua,LoginTrack.status == 1).all()
     # 所有在线设备数据
-    data = db.session.query(LoginTrack).filter(LoginTrack.user_name == username, LoginTrack.ip == ip,
+    data = db.session.query(LoginTrack).filter(LoginTrack.user_name == username,
                                                   LoginTrack.status==1).all()
     # 所有登陆历史数据
-    login_history = db.session.query(LoginTrack).filter(LoginTrack.user_name == username, LoginTrack.ip == ip,
+    login_history = db.session.query(LoginTrack).filter(LoginTrack.user_name == username,
                                                         LoginTrack.status == 0).all()
     if check:
         return render_template('dashborad.html',history=login_history,online=data)
