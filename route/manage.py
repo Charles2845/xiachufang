@@ -19,6 +19,7 @@ def manage():
                 "status" : 1,
                 "username":username
             }
+    # 先查询是否有相同UA，IP的设备在线，如果有，则此次登陆更新为最新在线状态，其他登陆下线
     history = db.session.query(LoginTrack).filter(LoginTrack.user_name == username,LoginTrack.ip == ip,
                                                   LoginTrack.user_agent == ua)
     for each in history:
@@ -34,19 +35,22 @@ def dashboard():
     ip = request.remote_addr
     ua = request.headers.get('User-Agent')
     username = session.get('username')
+    # 查询该设备是否处于在线状态
     check = db.session.query(LoginTrack).filter(LoginTrack.user_name == username, LoginTrack.ip == ip,
                                                 LoginTrack.user_agent == ua,LoginTrack.status == 1).all()
+    # 所有在线设备数据
     data = db.session.query(LoginTrack).filter(LoginTrack.user_name == username, LoginTrack.ip == ip,
                                                   LoginTrack.status==1).all()
+    # 所有登陆历史数据
     login_history = db.session.query(LoginTrack).filter(LoginTrack.user_name == username, LoginTrack.ip == ip,
                                                         LoginTrack.status == 0).all()
     if check:
         return render_template('dashborad.html',history=login_history,online=data)
-    return redirect(url_for('api.test_page')),302
+    return redirect(url_for('api.login')),302
 
 @manage_blueprint.route('/offline/<id>',methods=['GET'])
 def offline(id):
-    print(id)
+    # 注销操作，然后跳转到dashboard
     data = LoginTrack.query.get(id)
     data.status = 0
     return redirect(url_for("manage.dashboard"))

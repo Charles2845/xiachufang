@@ -1,3 +1,4 @@
+# coding=utf-8
 from config import db
 
 class LoginTrack(db.Model):
@@ -14,7 +15,7 @@ class LoginTrack(db.Model):
         self.user_name = kwargs.get('username')
         self.user_agent = kwargs.get('ua')
         self.time = kwargs.get('time')
-        self.status = kwargs.get('status')
+        self.status = kwargs.get('status')          # 0为下线，1为在线
 
     def toJson(self):
         return dict((c.name,
